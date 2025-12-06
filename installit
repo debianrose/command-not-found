@@ -40,7 +40,4 @@ chmod +x "$INSTALL_DIR/command-not-found"
 # Clean
 rm -rf "$TEMP"
 
-echo -e "${GREEN}Installed to: $INSTALL_DIR/command-not-found${NC}"
-echo ""
-echo "Add to ~/.bashrc:"
-echo "command_not_found_handle() { $INSTALL_DIR/command-not-found \"\$1\"; return \$?; }"
+echo -e "${GREEN}Done! Happy Customize!"
