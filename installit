@@ -1,0 +1,46 @@
+#!/bin/bash
+set -e
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+# Config
+REPO="https://github.com/debianrose/command-not-found.git"
+TEMP="$HOME/cnf-temp"
+INSTALL_DIR="$PREFIX/libexec/termux"
+
+# Exit if not Termux
+[ ! -d "/data/data/com.termux" ] && echo "For Termux only!" && exit 1
+
+# Check/install deps
+for cmd in cmake git node; do
+    command -v $cmd &>/dev/null || pkg install -y $cmd
+done
+
+# Build
+rm -rf "$TEMP"
+git clone "$REPO" "$TEMP"
+cd "$TEMP"
+
+export TERMUX_SCRIPTDIR="$TEMP"
+export TERMUX_PREFIX="$PREFIX"
+export TERMUX_ARCH=$(uname -m)
+
+mkdir -p build && cd build
+cmake ..
+make -j$(nproc)
+
+# Install
+mkdir -p "$INSTALL_DIR"
+cp command-not-found "$INSTALL_DIR/"
+chmod +x "$INSTALL_DIR/command-not-found"
+
+# Clean
+rm -rf "$TEMP"
+
+echo -e "${GREEN}Installed to: $INSTALL_DIR/command-not-found${NC}"
+echo ""
+echo "Add to ~/.bashrc:"
+echo "command_not_found_handle() { $INSTALL_DIR/command-not-found \"\$1\"; return \$?; }"

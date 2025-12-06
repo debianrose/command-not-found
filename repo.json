@@ -1,0 +1,17 @@
+{
+  "main": {
+    "url": "https://packages.termux.dev/apt/termux-main",
+    "distribution": "stable",
+    "name": "termux-main"
+  },
+  "x11": {
+    "url": "https://packages.termux.dev/apt/termux-x11",
+    "distribution": "x11",
+    "name": "termux-x11"
+  },
+  "root": {
+    "url": "https://packages.termux.dev/apt/termux-root",
+    "distribution": "root",
+    "name": "termux-root"
+  }
+}
